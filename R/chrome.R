@@ -112,7 +112,7 @@ chrome_print = function(
 
   with_temp_loop_maybe({
 
-    ws = websocket::WebSocket$new(get_entrypoint(debug_port, verbose), autoConnect = FALSE)
+    ws = websocket::WebSocket$new(get_entrypoint(debug_port, verbose), autoConnect = FALSE, maxMessageSize = 256 * 1024 * 1024)
     ws$onClose(kill_chrome)
     ws$onError(kill_chrome)
     close_ws = function() {
