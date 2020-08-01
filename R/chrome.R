@@ -53,7 +53,7 @@ chrome_print = function(
   input, output = xfun::with_ext(input, format), wait = 2, browser = 'google-chrome',
   format = c('pdf', 'png', 'jpeg'), options = list(), selector = 'body',
   box_model = c('border', 'content', 'margin', 'padding'), scale = 1, work_dir = tempfile(),
-  timeout = 30, extra_args = c('--disable-gpu'), verbose = 0, async = FALSE, encoding
+  timeout = 30, extra_args = c('--disable-gpu'), verbose = 0, async = FALSE, maxMessageSize = 128 * 1024 * 1024, encoding
 ) {
   is_rstudio_knit =
     !interactive() && !is.na(Sys.getenv('RSTUDIO', NA)) &&
@@ -112,7 +112,7 @@ chrome_print = function(
 
   with_temp_loop_maybe({
 
-    ws = websocket::WebSocket$new(get_entrypoint(debug_port, verbose), autoConnect = FALSE, maxMessageSize = 256 * 1024 * 1024)
+    ws = websocket::WebSocket$new(get_entrypoint(debug_port, verbose), autoConnect = FALSE, maxMessageSize)
     ws$onClose(kill_chrome)
     ws$onError(kill_chrome)
     close_ws = function() {
